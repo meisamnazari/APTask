@@ -1,0 +1,161 @@
+<html>
+
+<head>
+    <title>APMoller Task</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <style>
+        body {
+            background-color: #EFEFEF;
+        }
+
+        .app {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 98%;
+            padding-right: 50px;
+            box-sizing: border-box;
+        }
+
+        .numbersContainer {
+            display: flex;
+            flex-wrap: wrap;
+            width: 600px;
+            height: 600px;
+        }
+
+        .number {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 60px;
+        }
+
+        .buttonsContainer {
+            display: flex;
+            width: 150px;
+            height: 200px;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+
+        .button {
+            color: white;
+            background-color: #72C3DC;
+            width: 150px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 6px 2px -2px#2F454E;
+        }
+
+        footer {
+            height: 2%;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width:960px) {
+
+            body {
+                background-color: white;
+            }
+
+            .app {
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: space-around;
+                align-items: center;
+                padding-right: 0;
+                overflow-y: scroll;
+                padding-bottom: 50px;
+            }
+
+            .buttonsContainer {
+                width: 220px;
+                height: 40px;
+                flex-direction: row;
+                padding-bottom: 50px;
+            }
+
+            .button {
+                width: 90px;
+                height: 40px;
+            }
+
+            .numbersContainer {
+                display: block;
+                width: 100%;
+                height: unset;
+            }
+
+            .number {
+                width: 100%;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: black;
+                font-size: 20px;
+                background-color: #EFEFEF !important;
+                margin-bottom: 10px;
+                border-left: 20px solid;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app' class="app">
+        <div id='numbersContainer' class='numbersContainer'></div>
+        <div class="buttonsContainer">
+            <div class="button" id='shuffle'>SHUFFLE</div>
+            <div class="button" id='sort'>SORT</div>
+        </div>
+    </div>
+</body>
+<footer>Shuffle and sort by Meisam Nazari</footer>
+<script>
+    let numArray = [{ number: 1, color: '#6F98A8' }, { number: 2, color: '#2B8EAD' }, { number: 3, color: '#2F454E' }, { number: 4, color: '#2B8EAD' }, { number: 5, color: '#2F454E' }, { number: 6, color: '#BFBFBF' }, { number: 7, color: '#BFBFBF' }, { number: 8, color: '#6F98A8' }, { number: 9, color: '#2F454E' }]
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+            return array;
+        }
+    }
+
+    const mapNumbers = (array) => {
+        return array.map((num) => {
+            return `<div class=number style= 'background-color:${num.color}; border-color:${num.color}' >  ${num.number}  </div>`;
+        }).join('');
+    }
+
+    let numbers = document.querySelector('#numbersContainer');
+    numbers.innerHTML = mapNumbers(numArray);
+
+    let shuffle = document.querySelector('#shuffle');
+    let sort = document.querySelector('#sort');
+
+    shuffle.addEventListener('click', () => {
+        let array = shuffleArray(numArray);
+        numbers.innerHTML = mapNumbers(array);
+    })
+
+    sort.addEventListener('click', () => {
+        let array = numArray.sort((a, b) => {
+            return a.number - b.number
+        })
+        numbers.innerHTML = mapNumbers(array);
+    })
+
+</script>
+
+</html>
